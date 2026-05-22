@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Maison — Luxury Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #b8973a;
+    --gold-light: #e8d9a0;
+    --dark: #0e0e0e;
+    --dark2: #1a1a1a;
+    --dark3: #2a2a2a;
+    --text: #f0e8d0;
+    --muted: #888;
+    --body-bg: #faf9f7;
+    --card-bg: #fff;
+    --border: #e5e0d8;
+    --text-main: #1a1a1a;
+    --text-sub: #666;
+  }
+
+  body { font-family: 'Jost', sans-serif; background: var(--body-bg); color: var(--text-main); }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    background: var(--dark);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--dark3);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-light);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-right { display: flex; gap: 20px; align-items: center; }
+  .nav-icon {
+    color: var(--muted);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    position: relative;
+  }
+  .nav-icon:hover { color: var(--gold-light); }
+  .cart-badge {
+    position: absolute;
+    top: -6px; right: -8px;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 10px;
+    font-weight: 500;
+    width: 17px; height: 17px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(184,151,58,0.03) 40px,
+      rgba(184,151,58,0.03) 41px
+    );
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 600px; }
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 58px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 420px;
+    margin: 0 auto 36px;
+    font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 13px 32px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 13px 32px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--dark3);
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* SECTIONS */
+  section { padding: 64px 40px; }
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 36px;
+  }
+
+  /* PRODUCT GRID */
+  .products-section { background: var(--body-bg); }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .product-card:hover { border-color: var(--gold); }
+  .product-img {
+    background: #f5f2ec;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-img svg { opacity: 0.25; width: 60px; height: 60px; }
+  .product-img-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: #999;
+    text-transform: uppercase;
+  }
+  .product-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 10px;
+    padding: 3px 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .product-info { padding: 14px 16px; }
+  .product-name { font-size: 14px; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
+  .product-cat { font-size: 11px; color: var(--text-sub); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-size: 15px; font-weight: 500; color: var(--gold); }
+  .add-btn {
+    background: var(--dark);
+    color: var(--gold-light);
+    border: none;
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .add-btn:hover { background: var(--gold); color: var(--dark); }
+
+  /* CART */
+  .cart-section { background: #f5f2ec; border-top: 1px solid var(--border); }
+  .cart-box { max-width: 560px; margin: 0 auto; }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cart-thumb {
+    width: 60px; height: 75px;
+    background: #eae5dc;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .cart-details { flex: 1; }
+  .cart-item-name { font-size: 14px; font-weight: 500; color: var(--text-main); margin-bottom: 3px; }
+  .cart-item-sub { font-size: 12px; color: var(--text-sub); margin-bottom: 8px; }
+  .qty-ctrl { display: flex; align-items: center; gap: 10px; }
+  .qty-btn {
+    width: 26px; height: 26px;
+    background: transparent;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-main);
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s;
+  }
+  .qty-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .qty-val { font-size: 14px; min-width: 18px; text-align: center; }
+  .remove-link { font-size: 11px; color: var(--text-sub); cursor: pointer; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .remove-link:hover { color: #c0392b; }
+  .cart-item-price { font-size: 15px; font-weight: 500; color: var(--gold); white-space: nowrap; }
+  .cart-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0 0;
+  }
+  .cart-total-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-sub); }
+  .cart-total-val { font-size: 22px; font-weight: 500; color: var(--gold); font-family: 'Cormorant Garamond', serif; }
+  .checkout-btn {
+    width: 100%;
+    background: var(--dark);
+    color: var(--gold-light);
+    padding: 15px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    margin-top: 16px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .checkout-btn:hover { background: var(--gold); color: var(--dark); }
+  .empty-cart { font-size: 14px; color: var(--text-sub); padding: 24px 0; text-align: center; }
+
+  /* ABOUT & CONTACT */
+  .about-contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    border-top: 1px solid var(--border);
+  }
+  .about-text { font-size: 14px; color: var(--text-sub); line-height: 1.9; font-weight: 300; }
+  .feature-pills { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .pill {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    border: 1px solid #e0d0a0;
+    padding: 5px 14px;
+    text-transform: uppercase;
+    background: #fdf9ef;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 12px; }
+  .contact-form input,
+  .contact-form textarea {
+    padding: 11px 14px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-family: 'Jost', sans-serif;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--gold); }
+  .contact-form textarea { height: 100px; resize: none; }
+  .contact-submit {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 13px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .contact-submit:hover { background: #a07c28; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--dark3);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; color: var(--gold-light); font-size: 18px; letter-spacing: 0.2em; }
+  .footer-copy { font-size: 12px; color: #555; letter-spacing: 0.05em; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 12px; color: #555; letter-spacing: 0.08em; text-transform: uppercase; }
+  .footer-links a:hover { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 24px; }
+    .hero-title { font-size: 38px; }
+    section { padding: 48px 20px; }
+    .about-contact { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">MAISON</div>
+  <div class="nav-links">
+    <a href="#products">New In</a>
+    <a href="#products">Women</a>
+    <a href="#products">Men</a>
+    <a href="#products">Collections</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon" title="Search">&#128269;</button>
+    <button class="nav-icon" title="Wishlist">&#9825;</button>
+    <button class="nav-icon" title="Cart" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">
+      &#128717;
+      <span class="cart-badge" id="cart-count">2</span>
+    </button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">New Collection — Autumn 2026</div>
+    <h1 class="hero-title">Elegance<br><em>Redefined</em></h1>
+    <p class="hero-sub">Curated pieces for the discerning wardrobe. Timeless silhouettes crafted from the finest materials.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop the collection</button>
+      <button class="btn-outline" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Our story</button>
+    </div>
+  </div>
+</div>
+
+<section class="products-section" id="products">
+  <div class="section-tag">Featured Pieces</div>
+  <div class="section-heading">This season's edit</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-label">Blouse</div>
+        <span class="product-badge">New</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Silk Drape Blouse</div>
+        <div class="product-cat">Women · Tops</div>
+        <div class="product-footer">
+          <span class="product-price">৳ 8,500</span>
+          <button class="add-btn" onclick="addToCart('Silk Drape Blouse', 8500)">+ Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-label">Coat</div>
+        <span class="product-badge">Bestseller</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Wool Tailored Coat</div>
+        <div class="product-cat">Women · Outerwear</div>
+        <div class="product-footer">
+          <span class="product-price">৳ 24,000</span>
+          <button class="add-btn" onclick="addToCart('Wool Tailored Coat', 24000)">+ Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-label">Trousers</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Linen Trousers</div>
+        <div class="product-cat">Men · Bottoms</div>
+        <div class="product-footer">
+          <span class="product-price">৳ 6,200</span>
+          <button class="add-btn" onclick="addToCart('Linen Trousers', 6200)">+ Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-label">Scarf</div>
+        <span class="product-badge">Limited</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Cashmere Scarf</div>
+        <div class="product-cat">Accessories</div>
+        <div class="product-footer">
+          <span class="product-price">৳ 4,800</span>
+          <button class="add-btn" onclick="addToCart('Cashmere Scarf', 4800)">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cart-section" id="cart">
+  <div class="cart-box">
+    <div class="section-tag">Your Bag</div>
+    <div class="section-heading">Shopping cart</div>
+    <div id="cart-items"></div>
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-val" id="cart-total">৳ 0</span>
+    </div>
+    <button class="checkout-btn">Proceed to checkout &rarr;</button>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-contact">
+    <div>
+      <div class="section-tag">Our Story</div>
+      <div class="section-heading">About Maison</div>
+      <div class="about-text">
+        Maison was founded on the belief that true luxury lies in restraint. Each piece in our collection is designed to outlast trends — made from sustainably sourced fabrics by artisans who take pride in every seam.<br><br>
+        We ship across Bangladesh and internationally. Free delivery on orders above ৳ 5,000. Returns accepted within 30 days of purchase, no questions asked.
+      </div>
+      <div class="feature-pills">
+        <span class="pill">Free shipping ৳5,000+</span>
+        <span class="pill">30-day returns</span>
+        <span class="pill">Ethically made</span>
+      </div>
+    </div>
+    <div>
+      <div class="section-tag">Get in Touch</div>
+      <div class="section-heading">Contact us</div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your name" />
+        <input type="email" placeholder="Email address" />
+        <input type="tel" placeholder="Phone number (optional)" />
+        <textarea placeholder="Your message..."></textarea>
+        <button class="contact-submit" onclick="alert('Message sent! We will get back to you soon.')">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MAISON</div>
+  <div class="footer-links">
+    <a href="#products">Shop</a>
+    <a href="#about">About</a>
+    <a href="#about">Contact</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Maison — Dhaka, Bangladesh</div>
+</footer>
+
+<script>
+  let cart = [
+    { name: 'Silk Drape Blouse', price: 8500, qty: 1 },
+    { name: 'Cashmere Scarf', price: 4800, qty: 1 }
+  ];
+
+  function renderCart() {
+    const el = document.getElementById('cart-items');
+    if (!cart.length) {
+      el.innerHTML = '<p class="empty-cart">Your bag is empty.</p>';
+      document.getElementById('cart-total').textContent = '৳ 0';
+      document.getElementById('cart-count').textContent = '0';
+      return;
+    }
+    el.innerHTML = cart.map((item, i) => `
+      <div class="cart-item">
+        <div class="cart-thumb">${item.name.split(' ')[0]}</div>
+        <div class="cart-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-sub">Size: M &nbsp;|&nbsp; Color: Default</div>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+            <span class="remove-link" onclick="removeItem(${i})">Remove</span>
+          </div>
+        </div>
+        <span class="cart-item-price">৳ ${(item.price * item.qty).toLocaleString()}</span>
+      </div>
+    `).join('');
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cart-total').textContent = '৳ ' + total.toLocaleString();
+    document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
+  }
+
+  function changeQty(i, d) {
+    cart[i].qty = Math.max(1, cart[i].qty + d);
+    renderCart();
+  }
+
+  function removeItem(i) {
+    cart.splice(i, 1);
+    renderCart();
+  }
+
+  function addToCart(name, price) {
+    const ex = cart.find(c => c.name === name);
+    if (ex) ex.qty++;
+    else cart.push({ name, price, qty: 1 });
+    renderCart();
+    document.getElementById('cart').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  renderCart();
+</script>
+</body>
+</html>
